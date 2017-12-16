@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>test</title>
+<script src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<div>message is {{message}}</div>
+		<my-component v-model="message"></my-component>
+	</div>
+	<script type="text/javascript">
+		Vue.component('my-component', {
+			props : [ 'value' ],
+			methods : {
+				updateValue : function(){
+					this.$emit('input', this.tag1+","+this.tag2+","+this.tag3)
+				}
+			},
+			watch:{
+				tag1:function(){
+					this.updateValue()
+				},
+				tag2:function(){
+					this.updateValue()
+				},
+				tag3:function(){
+					this.updateValue()
+				}
+			},
+			data : function(){
+				return {
+					tag1:this.value.split(",")[0],
+					tag2:this.value.split(",")[1],
+					tag3:this.value.split(",")[2]
+					}
+				},
+			template : '<div> <input v-model="tag1"/> <input v-model="tag2"/> <input v-model="tag3"/></div>'
+		});
+
+		new Vue({
+			el : '#app',
+			data : {
+				message : "aa,bb,cc"
+			}
+		})
+	</script>
+</body>
+</html>
